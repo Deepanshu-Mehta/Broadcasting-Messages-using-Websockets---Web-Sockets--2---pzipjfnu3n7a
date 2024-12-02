@@ -17,10 +17,19 @@ app.get('/', (req, res) => {
 
 // Handle WebSocket connections
 io.on('connection', (socket) => {
+  console.log('A user connected');
 
-  //write your code here
+  socket.on('message', (message) => {
+    console.log('Received message:', message);
 
+    io.emit('message', message);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
 });
+
 
 // Start the server
 const PORT = 3000;
